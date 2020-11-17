@@ -1,0 +1,103 @@
+import javax.microedition.lcdui.*;
+import javax.microedition.midlet.*;
+import java.io.*;
+public class AI extends MIDlet
+{
+	Display display;
+	MainCanvas mc;
+	public AI(){
+		display=Display.getDisplay(this);
+		mc=new MainCanvas();
+		display.setCurrent(mc);
+	}
+	public void startApp(){
+	}
+	public void destroyApp(boolean unc){
+	}
+	public void pauseApp(){
+	}
+}
+class MainCanvas extends Canvas
+{   Image  nowimg,downImg,leftImg,upImg,rightImg,leftImg_1,leftImg_2,upImg_1,upImg_2,rightImg_1,rightImg_2,downImg_1,downImg_2;
+    int x,y;
+    public MainCanvas()
+	{
+		try
+		{
+			downImg=Image.createImage("/sayo10.png");
+			leftImg=Image.createImage("/sayo12.png");
+		    upImg=Image.createImage("/sayo14.png");
+			rightImg=Image.createImage("/sayo16.png");
+			leftImg_1=Image.createImage("/sayo02.png");
+			leftImg_2=Image.createImage("/sayo22.png");
+			rightImg_1=Image.createImage("/sayo06.png");
+			rightImg_2=Image.createImage("/sayo26.png");
+			upImg_1=Image.createImage("/sayo04.png");
+            upImg_2=Image.createImage("/sayo24.png");
+			downImg_1=Image.createImage("/sayo00.png");
+			downImg_2=Image.createImage("/sayo20.png");
+			nowimg=downImg;
+			x=110;y=130;
+		}
+		
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	public void paint(Graphics g){
+		g.setColor(0,191,255);
+		g.fillRect(0,0,getWidth(),getHeight());
+		g.drawImage(nowimg,x,y,0);
+	}
+	public void keyPressed(int keyCode){
+	int action=getGameAction(keyCode);
+	if(action==LEFT && x>=0){
+	if(x%2==0)
+		{
+		nowimg=leftImg_1;
+		}
+	if(x%2!=0)
+		{
+		nowimg=leftImg_2;
+	    }
+	    } 
+	if(action==RIGHT && x<=215){
+	    nowimg=rightImg;
+	if(x%2==0)
+		{
+		nowimg=rightImg_1;
+		}
+	if(x%2!=0)
+		{
+		nowimg=rightImg_2;
+	    }
+	    x=x+5; 
+	}
+	if(action==UP && y>=1){
+	nowimg=upImg;
+	if(y%2==0)
+		{
+		nowimg=upImg_1;
+		}
+	if(y%2!=0)
+		{
+		nowimg=upImg_2;
+	    }
+	y=y-5;
+	}
+	if(action==DOWN && y<=260){
+	nowimg=downImg;
+	if(y%2==0)
+		{
+		nowimg=downImg_1;
+		}
+	if(y%2!=0)
+		{
+		nowimg=downImg_2;
+	    }
+	y=y+5;
+	}
+		repaint();
+	}
+}
